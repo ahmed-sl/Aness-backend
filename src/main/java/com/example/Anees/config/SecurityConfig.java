@@ -29,6 +29,13 @@ import org.springframework.context.annotation.Configuration;
 //@EnableWebSecurity
 //@RequiredArgsConstructor
 public class SecurityConfig {
+    
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+
+        return http.build();
+    }
     //extends WebSecurityConfiguration
 //    private final MyUserDetailsService myUserDetailsService;
 //
