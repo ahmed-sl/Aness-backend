@@ -33,6 +33,7 @@ public class MyControlAdvise {
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<Api> httpRequestMethodNotSupported(HttpRequestMethodNotSupportedException error){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Api(error.getMessage(),400));
+
     }
 
     @ExceptionHandler(value = Exception.class)
@@ -40,5 +41,7 @@ public class MyControlAdvise {
         exception.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new Api("Server Error !",500));
     }
+
+
 
 }

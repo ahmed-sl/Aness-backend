@@ -1,15 +1,14 @@
 package com.example.Anees.controller;
 
 
+import com.example.Anees.exceptions.ApiException;
+import org.springframework.ui.Model;
 import com.example.Anees.model.Book;
 import com.example.Anees.service.BookService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,16 +16,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 public class BookController {
-    private BookService bookService;
-    public BookController(BookService bookService) {
-        super();
-        this.bookService = bookService;
-    }
+    private final BookService bookService;
+
 
     @PostMapping("/books")
 
-    public String saveStudent( @RequestBody Book book) {
+    public Book saveStudent( @RequestBody Book book) {
       bookService.saveBook(book);
-        return "redirect:/books";
+       return book;
     }
+    @GetMapping("/books")
+    public List<Book> listBooks() {
+
+
+        return bookService.getAllBooks();
+
+    }
+
+    @GetMapping("/books/{id}")
+    public String deleteBook(@PathVariable String id) {
+
+        return bookService.deleteBookById(id);
+
+    }
+
+
+    @PostMapping("/books/{id}")
+    public String updateBook(@PathVariable String id,
+                             @RequestBody Book book
+                               ) {
+
+            // save updated book object
+            bookService.updateBook(id,book);
+            return "redirect:/books";
+        //}
+    }
+
+
 }
